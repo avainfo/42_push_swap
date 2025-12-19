@@ -7,7 +7,7 @@ CFLAGS		:= -Wall -Wextra -Werror
 LIBFT_DIR	:= libft
 LIBFT		:= $(LIBFT_DIR)/libft.a
 
-INCLUDES    := -Iinludes/ -I$(LIBFT_DIR)
+INCLUDES    := -Iincludes/ -I$(LIBFT_DIR)
 
 SRCS		:= \
 			   src/push_swap.c
