@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ando-sou <ando-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/15 19:50:46 by ando-sou          #+#    #+#             */
-/*   Updated: 2025/12/19 22:12:29 by ando-sou         ###   ########.fr       */
+/*   Created: 2025/12/19 19:54:50 by ando-sou          #+#    #+#             */
+/*   Updated: 2025/12/19 22:27:58 by ando-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/push_swap.h"
 
-int	main(int argc, char *argv[])
+int	is_space(char c)
 {
-	(void) argc;
-	write(1, argv[1], ft_strlen(argv[1]));
+	return (c == ' ' || (c >= 9 && c <= 13));
 }
+
+int validate_char(int c);
