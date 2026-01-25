@@ -6,7 +6,7 @@
 /*   By: antigrav <antigrav@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/25 14:40:00 by antigrav          #+#    #+#             */
-/*   Updated: 2026/01/25 14:40:00 by antigrav         ###   ########.fr       */
+/*   Updated: 2026/01/25 16:21:37 by ando-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,15 @@ static int	ft_strcmp_chk(const char *s1, const char *s2)
 	return ((unsigned char)*s1 - (unsigned char)*s2);
 }
 
+static void	check(t_stack **a, t_stack **b, char *line)
+{
+	if (line[0] == '\0')
+		free_all_and_exit(a, b, line);
+}
+
 void	exec_instruction(t_stack **a, t_stack **b, char *line)
 {
-	if (line[0] == '\0') 
-		free_all_and_exit(a, b, line);
+	check(a, b, line);
 	if (!ft_strcmp_chk(line, "sa"))
 		sa(a, 0);
 	else if (!ft_strcmp_chk(line, "sb"))

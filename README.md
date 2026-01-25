@@ -3,44 +3,137 @@
 # Push_swap
 
 ## Description
-Push_swap is a 42 school algorithm project. The goal is to sort a stack of integers using two stacks (`a` and `b`) and a limited set of instructions, with the absolute minimum number of operations possible. It challenges students on algorithm concepts, complexity (Big O), and C programming under strict constraints (Norme).
+
+**Push_swap** is a 42 school algorithm project.
+The goal is to sort a stack of integers using **two stacks (`a` and `b`)** and a **restricted set of instructions**, while producing **the smallest possible number of operations**.
+
+The project focuses on:
+
+* Algorithmic reasoning and optimization
+* Time and space complexity
+* Low-level C programming under strict constraints (42 Norme)
+
+A **bonus program (`checker`)** is also implemented to validate instruction sequences.
+
+---
 
 ## Features
-- **Efficient Sorting**: Implements a robust **LIS (Longest Increasing Subsequence)** + **Greedy strategy**.
-- **Advanced Parsing**: Handles both multi-argument inputs (`./push_swap 1 2 3`) and single string inputs (`./push_swap "1 2 3"`).
-- **Coordinate Compression**: Maps arbitrary integers to a simplified rank range `[0, N-1]`.
-- **Optimization**: Calculates move costs dynamically to execute the cheapest operations (utilizing `rr` and `rrr` for efficiency).
+
+### Mandatory part
+
+* **Efficient Sorting Algorithm**
+  Uses a **LIS (Longest Increasing Subsequence) + Greedy cost-based strategy** to minimize the number of operations.
+* **Advanced Parsing**
+  Supports both multiple arguments and single quoted strings:
+  `./push_swap 1 2 3`
+  `./push_swap "1 2 3"`
+* **Robust Validation**
+
+  * Integer overflow handling
+  * Duplicate detection
+  * Invalid input detection
+* **Coordinate Compression**
+  Maps values to a normalized index range `[0, N-1]` for faster comparisons.
+* **Move Optimization**
+  Dynamically computes move costs and merges rotations using `rr` and `rrr`.
+
+### Bonus part
+
+* **Custom Checker Program**
+  A `checker` binary capable of:
+
+  * Reading instructions from standard input
+  * Executing them on the stacks
+  * Validating if stack `a` is sorted and stack `b` is empty
+* **Strict Error Handling**
+  Detects:
+
+  * Invalid instructions
+  * Invalid arguments
+  * Overflows
+  * Duplicates
+
+---
 
 ## Instructions
 
 ### Compilation
-Use the `Makefile` to compile the project:
+
+Use the `Makefile`:
+
 ```bash
-make        # Compiles the executable 'push_swap'
+make        # Compiles push_swap
+make bonus  # Compiles checker
 make clean  # Removes object files
-make fclean # Removes object files and the executable
-make re     # Recompiles everything
+make fclean # Removes object files and binaries
+make re     # Full recompilation
 ```
 
+---
+
 ### Execution
-Run the program with a list of integers as arguments:
+
+#### push_swap
+
 ```bash
 ./push_swap 4 67 3 87 23
 ```
 
-It outputs the list of Move instructions to sort numbers.
+Outputs the list of instructions required to sort the stack.
 
-To verify the result (using a compatible checker):
+#### checker (bonus)
+
 ```bash
-ARG="4 67 3 87 23"; ./push_swap $ARG | ./checker $ARG
+ARG="4 67 3 87 23"
+./push_swap $ARG | ./checker $ARG
 ```
+
+Output:
+
+* `OK` if sorted correctly
+* `KO` otherwise
+
+You can also test manually:
+
+```bash
+./checker 3 2 1 0
+rra
+pb
+sa
+rra
+pa
+```
+
+---
+
+## Project Constraints
+
+* Written in **C**
+* Fully compliant with **42 Norme**
+* No global variables
+* No memory leaks
+* Instructions printed one per line
+* No output if no arguments are provided
+* On error, prints `Error\n` to stderr
+
+---
 
 ## Resources & AI Usage
 
 ### Resources
-- **Algorithms**: Research on Longest Increasing Subsequence (LIS) and Turk Algorithm (conceptually similar to the greedy approach used here).
+
+* 42 subject PDF
+
+* Algorithm references:
+
+  * Longest Increasing Subsequence (LIS)
+  * Greedy cost-based sorting strategies (Turk-inspired approach)
 
 ### AI Usage
-AI assistance was used exclusively for documentation purposes:
-- Improving clarity and structure of the README.
-- Helping formulate concise explanations of the project goals and algorithmic choices.
+
+AI tools were used **exclusively for documentation purposes**, in accordance with the 42 AI rules:
+
+* Improving clarity and structure of the README
+* Helping rephrase explanations of algorithmic choices (because english is hard)
+
+No AI-generated code was used in the implementation.
