@@ -15,7 +15,16 @@ SRCS		:= \
 			   src/parsing/parse_one_int.c \
 			   src/stack/stack_init.c \
 			   src/stack/stack_utils.c \
-			   src/algo/compress.c
+			   src/algo/compress.c \
+			   src/algo/lis.c \
+			   src/algo/simple_sort.c \
+			   src/algo/push_swap_algo.c \
+			   src/algo/cost.c \
+			   src/algo/operations.c \
+			   src/moves/swap.c \
+			   src/moves/push.c \
+			   src/moves/rotate.c \
+			   src/moves/reverse_rotate.c
 
 OBJS        := $(SRCS:.c=.o)
 

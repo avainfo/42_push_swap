@@ -41,4 +41,22 @@ int		has_duplicates_stack(t_stack *a);
 int		is_sorted(t_stack *a);
 void	compress_indexes(t_stack *a);
 
+void	sa(t_stack **a, int print);
+void	sb(t_stack **b, int print);
+void	ss(t_stack **a, t_stack **b, int print);
+void	pa(t_stack **a, t_stack **b, int print);
+void	pb(t_stack **a, t_stack **b, int print);
+void	ra(t_stack **a, int print);
+void	rb(t_stack **b, int print);
+void	rr(t_stack **a, t_stack **b, int print);
+void	rra(t_stack **a, int print);
+void	rrb(t_stack **b, int print);
+void	rrr(t_stack **a, t_stack **b, int print);
+
+/* Algo */
+void	simple_sort(t_stack **a, t_stack **b);
+void	push_swap(t_stack **a, t_stack **b);
+int		*find_lis_indices(t_stack *a, int size);
+void	move_cheapest_back(t_stack **a, t_stack **b);
+
 #endif
