@@ -9,8 +9,7 @@ LIBFT		:= $(LIBFT_DIR)/libft.a
 
 INCLUDES    := -Iincludes/ -I$(LIBFT_DIR)
 
-SRCS		:= \
-			   src/main.c \
+COMMON_SRCS	:= \
 			   src/parsing/parse_args.c \
 			   src/parsing/parse_one_int.c \
 			   src/stack/stack_init.c \
@@ -26,7 +25,15 @@ SRCS		:= \
 			   src/moves/rotate.c \
 			   src/moves/reverse_rotate.c
 
+SRCS		:= $(COMMON_SRCS) src/main.c
+
+BONUS_SRCS	:= $(COMMON_SRCS) \
+			   src/checker/checker_main_bonus.c \
+			   src/checker/checker_read_bonus.c \
+			   src/checker/checker_exec_bonus.c
+
 OBJS        := $(SRCS:.c=.o)
+BONUS_OBJS  := $(BONUS_SRCS:.c=.o)
 
 all: $(NAME)
 
@@ -36,16 +43,19 @@ $(LIBFT):
 $(NAME): $(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
+bonus: $(LIBFT) $(BONUS_OBJS)
+	$(CC) $(CFLAGS) $(BONUS_OBJS) $(LIBFT) -o $(BONUS_NAME)
+
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 
 clean:
-	$(RM) $(OBJS)
+	$(RM) $(OBJS) $(BONUS_OBJS)
 	$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(BONUS_NAME)
 	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
