@@ -3,20 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   checker_read_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: antigrav <antigrav@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ando-sou <ando-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/25 14:35:00 by antigrav          #+#    #+#             */
-/*   Updated: 2026/01/25 14:35:00 by antigrav         ###   ########.fr       */
+/*   Updated: 2026/01/25 16:52:32 by ando-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "checker.h"
 
-static char	*ft_strjoin_gnl(char *s1, char *s2)
+static char	*ft_strjoin_gnl(char *s1, char *s2, size_t j)
 {
 	char	*str;
 	size_t	i;
-	size_t	j;
 
 	if (!s1)
 	{
@@ -62,7 +61,7 @@ static char	*ft_read_to_left_str(int fd, char *left_str)
 			return (NULL);
 		}
 		buff[rd_bytes] = '\0';
-		left_str = ft_strjoin_gnl(left_str, buff);
+		left_str = ft_strjoin_gnl(left_str, buff, 0);
 	}
 	free(buff);
 	return (left_str);
