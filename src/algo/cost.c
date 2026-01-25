@@ -6,113 +6,110 @@
 /*   By: antigrav <antigrav@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/25 03:20:00 by antigrav          #+#    #+#             */
-/*   Updated: 2026/01/25 03:20:00 by antigrav         ###   ########.fr       */
+/*   Updated: 2026/01/25 03:55:00 by antigrav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/push_swap.h"
 
+static void	update_target(t_stack *tmp, int val, int i, int *tgt_data)
+{
+	if (tmp->index < tgt_data[2])
+	{
+		tgt_data[2] = tmp->index;
+		tgt_data[1] = i;
+	}
+	if (tmp->index > val && tmp->index < tgt_data[3])
+	{
+		tgt_data[3] = tmp->index;
+		tgt_data[0] = i;
+	}
+}
+
 int	get_target_pos(t_stack *a, int val)
 {
 	t_stack	*tmp;
-	int		tgt;
-	int		min;
+	int		tgt_data[4];
 	int		i;
-	int		min_val;
-	int		tgt_val;
 
-	tgt = -1;
-	min = -1;
-	min_val = INT_MAX;
-	tgt_val = INT_MAX;
+	tgt_data[0] = -1;
+	tgt_data[1] = -1;
+	tgt_data[2] = 2147483647;
+	tgt_data[3] = 2147483647;
 	tmp = a;
 	i = 0;
 	while (tmp)
 	{
-		if (tmp->index < min_val)
-		{
-			min_val = tmp->index;
-			min = i;
-		}
-		if (tmp->index > val && tmp->index < tgt_val)
-		{
-			tgt_val = tmp->index;
-			tgt = i;
-		}
+		update_target(tmp, val, i, tgt_data);
 		tmp = tmp->next;
 		i++;
 	}
-	if (tgt != -1)
-		return (tgt);
-	return (min);
+	if (tgt_data[0] != -1)
+		return (tgt_data[0]);
+	return (tgt_data[1]);
 }
 
-static int	max_val(int a, int b)
+static void	calc_current_costs(int *costs, int idx_a, int idx_b, int *sizes)
 {
-	if (a > b)
-		return (a);
-	return (b);
-}
-
-void	get_costs(int ra, int rb, int sa, int sb, int *cost)
-{
+	int	ra;
+	int	rb;
 	int	rra;
 	int	rrb;
 
+	ra = idx_a;
+	rb = idx_b;
 	if (ra == 0)
 		rra = 0;
 	else
-		rra = sa - ra;
+		rra = sizes[0] - ra;
 	if (rb == 0)
 		rrb = 0;
 	else
-		rrb = sb - rb;
-	cost[0] = max_val(ra, rb);
-	cost[1] = max_val(rra, rrb);
-	cost[2] = ra + rrb;
-	cost[3] = rra + rb;
+		rrb = sizes[1] - rb;
+	costs[0] = ra;
+	if (rb > ra)
+		costs[0] = rb;
+	costs[1] = rra;
+	if (rrb > rra)
+		costs[1] = rrb;
+	costs[2] = ra + rrb;
+	costs[3] = rra + rb;
 }
 
-static void	update_best(int *current, int *best, int *best_m, int idx)
+static void	update_best(int *best, int *costs, int *method, int idx)
 {
 	int	i;
 
 	i = 0;
 	while (i < 4)
 	{
-		if (current[i] < *best)
+		if (costs[i] < best[0])
 		{
-			*best = current[i];
-			*best_m = i;
-			best_m[1] = idx; /* store index of B */
+			best[0] = costs[i];
+			*method = i;
+			best[1] = idx;
 		}
 		i++;
 	}
 }
 
-/* Returns index in B that is cheapest, sets method in `method` */
-/* method: 0=rr, 1=rrr, 2=ra+rrb, 3=rra+rb */
-/* We iterate B. For each node, get target pos in A (and thus costs) */
 int	find_cheapest_b(t_stack *a, t_stack *b, int *method)
 {
-	int		idx;
+	int		sizes[2];
 	int		costs[4];
-	int		best_cost;
-	int		best_data[2]; /* [method, index_in_b] */
-	int		size_a;
-	int		size_b;
+	int		best[2];
+	int		idx;
 
-	size_a = stack_size(a);
-	size_b = stack_size(b);
-	best_cost = INT_MAX;
+	sizes[0] = stack_size(a);
+	sizes[1] = stack_size(b);
+	best[0] = 2147483647;
 	idx = 0;
 	while (b)
 	{
-		get_costs(get_target_pos(a, b->index), idx, size_a, size_b, costs);
-		update_best(costs, &best_cost, &best_data[0], idx);
+		calc_current_costs(costs, get_target_pos(a, b->index), idx, sizes);
+		update_best(best, costs, method, idx);
 		b = b->next;
 		idx++;
 	}
-	*method = best_data[0];
-	return (best_data[1]);
+	return (best[1]);
 }

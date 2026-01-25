@@ -6,7 +6,7 @@
 /*   By: antigrav <antigrav@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/25 03:20:00 by antigrav          #+#    #+#             */
-/*   Updated: 2026/01/25 03:30:00 by antigrav         ###   ########.fr       */
+/*   Updated: 2026/01/25 03:45:00 by antigrav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,64 +28,69 @@ static void	do_rr_rrr(t_stack **a, t_stack **b, int *cnt, int reverse)
 	}
 }
 
-static void	execute_move(t_stack **a, t_stack **b, int cost_a, int cost_b, int method)
+static void	execute_move(t_stack **a, t_stack **b, int *cnts, int method)
 {
-	int	cnt[2];
+	int	tmp[2];
 
-	cnt[0] = cost_a;
-	cnt[1] = cost_b;
+	tmp[0] = cnts[0];
+	tmp[1] = cnts[1];
 	if (method == 0)
-		do_rr_rrr(a, b, cnt, 0);
+		do_rr_rrr(a, b, tmp, 0);
 	else if (method == 1)
-		do_rr_rrr(a, b, cnt, 1);
-	while (cnt[0] > 0)
+		do_rr_rrr(a, b, tmp, 1);
+	while (tmp[0] > 0)
 	{
 		if (method == 1 || method == 3)
 			rra(a, 1);
 		else
 			ra(a, 1);
-		cnt[0]--;
+		tmp[0]--;
 	}
-	while (cnt[1] > 0)
+	while (tmp[1] > 0)
 	{
 		if (method == 1 || method == 2)
 			rrb(b, 1);
 		else
 			rb(b, 1);
-		cnt[1]--;
+		tmp[1]--;
 	}
 }
 
-/* Determine raw counts based on method and positions */
+static int	get_node_val(t_stack *stack, int idx)
+{
+	int	i;
+
+	i = 0;
+	while (i < idx && stack)
+	{
+		stack = stack->next;
+		i++;
+	}
+	if (stack)
+		return (stack->index);
+	return (0);
+}
+
 void	move_cheapest_back(t_stack **a, t_stack **b)
 {
 	int		method;
 	int		idx_b;
-	int		tgt_a;
-	int		size_a;
-	int		size_b;
-	t_stack	*tmp;
-	int		i;
-	int		val;
-	int		cnts[2]; /* 0: a, 1: b */
+	int		v[4];
+	int		moves[2];
 
-	size_a = stack_size(*a);
-	size_b = stack_size(*b);
+	v[1] = stack_size(*a);
+	v[2] = stack_size(*b);
 	idx_b = find_cheapest_b(*a, *b, &method);
-	tmp = *b;
-	i = 0;
-	while (i++ < idx_b)
-		tmp = tmp->next;
-	val = tmp->index;
-	tgt_a = get_target_pos(*a, val);
-	cnts[0] = tgt_a;
-	cnts[1] = idx_b;
+	v[3] = get_node_val(*b, idx_b);
+	v[0] = get_target_pos(*a, v[3]);
+	moves[0] = v[0];
+	moves[1] = idx_b;
 	if (method == 1 || method == 3)
-		if (tgt_a > 0)
-			cnts[0] = size_a - tgt_a;
+		if (v[0] > 0)
+			moves[0] = v[1] - v[0];
 	if (method == 1 || method == 2)
 		if (idx_b > 0)
-			cnts[1] = size_b - idx_b;
-	execute_move(a, b, cnts[0], cnts[1], method);
+			moves[1] = v[2] - idx_b;
+	execute_move(a, b, moves, method);
 	pa(a, b, 1);
 }

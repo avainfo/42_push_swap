@@ -12,7 +12,6 @@
 
 #include "../../includes/push_swap.h"
 
-
 /* Correct implementation of push_non_lis */
 static void	push_to_b_correct(t_stack **a, t_stack **b, int *in_lis, int n)
 {

@@ -12,7 +12,6 @@
 
 #include "../../includes/push_swap.h"
 
-/* Returns an array where arr[val] = 1 if val (index) is in LIS */
 static int	*alloc_init_array(int size, int val)
 {
 	int	*arr;
@@ -31,7 +30,7 @@ static void	extract_lis(int *in_lis, int *arr, int *prev, int max_idx)
 {
 	while (max_idx != -1)
 	{
-		in_lis[arr[max_idx]] = 1; /* Mark the value (index) as kept */
+		in_lis[arr[max_idx]] = 1;
 		max_idx = prev[max_idx];
 	}
 }
@@ -58,39 +57,48 @@ static void	run_lis_algo(int *arr, int size, int *dp, int *prev)
 	}
 }
 
-int	*find_lis_indices(t_stack *a, int size)
+static void	fill_arrays(t_stack *a, int **arr, int **dp, int **prev)
 {
-	int		*arr; /* stack values */
-	int		*dp;
-	int		*prev;
-	int		*in_lis; /* return array */
 	t_stack	*tmp;
 	int		i;
-	int		max_idx;
+	int		size;
 
-	arr = malloc(sizeof(int) * size);
-	dp = alloc_init_array(size, 1);
-	prev = alloc_init_array(size, -1);
+	size = stack_size(a);
+	*arr = malloc(sizeof(int) * size);
+	*dp = alloc_init_array(size, 1);
+	*prev = alloc_init_array(size, -1);
+	if (!*arr || !*dp || !*prev)
+		exit(1);
 	tmp = a;
 	i = 0;
 	while (tmp)
 	{
-		arr[i++] = tmp->index;
+		(*arr)[i++] = tmp->index;
 		tmp = tmp->next;
 	}
-	run_lis_algo(arr, size, dp, prev);
+	run_lis_algo(*arr, size, *dp, *prev);
+}
+
+int	*find_lis_indices(t_stack *a, int size)
+{
+	int		*data[3];
+	int		*in_lis;
+	int		max_idx;
+	int		i;
+
+	fill_arrays(a, &data[0], &data[1], &data[2]);
 	max_idx = 0;
 	i = 0;
 	while (i < size)
 	{
-		if (dp[i] > dp[max_idx])
+		if (data[1][i] > data[1][max_idx])
 			max_idx = i;
 		i++;
 	}
-	in_lis = alloc_init_array(size, 0); /* size is N, indices are 0..N-1 */
-	extract_lis(in_lis, arr, prev, max_idx);
-	free(arr);
-	free(dp);
-	free(prev);
+	in_lis = alloc_init_array(size, 0);
+	extract_lis(in_lis, data[0], data[2], max_idx);
+	free(data[0]);
+	free(data[1]);
+	free(data[2]);
 	return (in_lis);
 }

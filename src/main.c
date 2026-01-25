@@ -14,6 +14,7 @@
 
 int	main(int ac, char **av)
 {
+	t_stack	*b;
 	t_stack	*a;
 
 	if (ac < 2)
@@ -27,8 +28,6 @@ int	main(int ac, char **av)
 		return (0);
 	}
 	compress_indexes(a);
-	t_stack	*b;
-
 	b = NULL;
 	if (stack_size(a) <= 5)
 		simple_sort(&a, &b);

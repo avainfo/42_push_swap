@@ -6,11 +6,31 @@
 /*   By: ando-sou <ando-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 22:23:26 by ando-sou          #+#    #+#             */
-/*   Updated: 2025/12/19 22:30:02 by ando-sou         ###   ########.fr       */
+/*   Updated: 2026/01/25 03:50:00 by ando-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/push_swap.h"
+
+static int	check_overflow(long val, int sign)
+{
+	if (sign == 1)
+	{
+		if (val > INT_MAX)
+			return (-1);
+	}
+	if (sign == -1)
+	{
+		if (-val < INT_MIN)
+			return (-1);
+	}
+	return (0);
+}
+
+static int	is_sign(char c)
+{
+	return (c == '+' || c == '-');
+}
 
 int	parse_one_int(const char *s, int *i, int *out)
 {
@@ -22,11 +42,10 @@ int	parse_one_int(const char *s, int *i, int *out)
 	if (!s[*i])
 		return (0);
 	sign = 1;
-	if (s[*i] == '+' || s[*i] == '-')
+	if (is_sign(s[*i]))
 	{
-		if (s[*i] == '-')
+		if (s[(*i)++] == '-')
 			sign = -1;
-		(*i)++;
 	}
 	if (s[*i] < '0' || s[*i] > '9')
 		return (-1);
@@ -34,9 +53,7 @@ int	parse_one_int(const char *s, int *i, int *out)
 	while (s[*i] >= '0' && s[*i] <= '9')
 	{
 		val = val * 10 + (s[*i] - '0');
-		if (sign == 1 && val > (long)INT_MAX)
-			return (-1);
-		if (sign == -1 && -val < (long)INT_MIN)
+		if (check_overflow(val, sign) == -1)
 			return (-1);
 		(*i)++;
 	}
