@@ -6,7 +6,7 @@
 /*   By: antigrav <antigrav@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/25 02:30:00 by antigrav          #+#    #+#             */
-/*   Updated: 2026/01/25 02:30:00 by antigrav         ###   ########.fr       */
+/*   Updated: 2026/01/25 02:40:22 by ando-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,6 @@ int	has_duplicates_stack(t_stack *a)
 
 int	is_space(char c)
 {
-	return (c == ' ' || c == '\t' || c == '\n' || \
-			c == '\v' || c == '\f' || c == '\r');
+	return (c == ' ' || c == '\t' || c == '\n'
+		|| c == '\v' || c == '\f' || c == '\r');
 }
