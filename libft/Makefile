@@ -24,6 +24,7 @@ SRC := ft_atoi.c \
 	ft_isascii.c \
 	ft_isdigit.c \
 	ft_isprint.c \
+	ft_isspace.c \
 	ft_itoa.c \
 	ft_memchr.c \
 	ft_memcmp.c \
@@ -35,6 +36,7 @@ SRC := ft_atoi.c \
 	ft_putnbr_fd.c \
 	ft_putstr_fd.c \
 	ft_split.c \
+	ft_split_ws.c \
 	ft_strchr.c \
 	ft_strdup.c \
 	ft_striteri.c \
@@ -51,35 +53,18 @@ SRC := ft_atoi.c \
 	ft_tolower.c \
 	ft_toupper.c
 
-BONUS := ft_lstadd_back_bonus.c \
-	ft_lstadd_front_bonus.c \
-	ft_lstclear_bonus.c \
-	ft_lstdelone_bonus.c \
-	ft_lstiter_bonus.c \
-	ft_lstlast_bonus.c \
-	ft_lstmap_bonus.c \
-	ft_lstnew_bonus.c \
-	ft_lstsize_bonus.c
-
 OBJ := $(SRC:.c=.o)
-BOBJ := $(BONUS:.c=.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
 	$(AR) $(NAME) $(OBJ)
 
-bonus: .bonus
-
-.bonus: $(OBJ) $(BOBJ)
-	$(AR) $(NAME) $^
-	@touch .bonus
-
 %.o: %.c libft.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	$(RM) $(OBJ) $(BOBJ) .bonus
+	$(RM) $(OBJ)
 
 fclean: clean
 	$(RM) $(NAME)

@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
+/*   ft_free_split.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ando-sou <ando-sou@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/24 17:51:59 by ando-sou          #+#    #+#             */
-/*   Updated: 2025/10/24 17:59:02 by ando-sou         ###   ########.fr       */
+/*   Created: 2026/01/25 01:49:53 by ando-sou          #+#    #+#             */
+/*   Updated: 2026/01/25 01:50:34 by ando-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_lstsize(t_list *lst)
+void	free_split(char **split)
 {
 	int	i;
 
+	if (!split)
+		return ;
 	i = 0;
-	while (lst)
+	while (split[i])
 	{
+		free(split[i]);
 		i++;
-		lst = lst->next;
 	}
-	return (i);
+	free(split);
 }

@@ -6,7 +6,7 @@
 /*   By: ando-sou <ando-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 19:49:33 by ando-sou          #+#    #+#             */
-/*   Updated: 2025/12/19 22:27:39 by ando-sou         ###   ########.fr       */
+/*   Updated: 2025/12/28 18:15:54 by ando-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
-# include "libft.h"
+# include "../libft/libft.h"
 
 typedef struct s_stack
 {
@@ -38,5 +38,7 @@ void	fill_array_from_stack(t_stack *a, int *arr);
 void	error_exit(t_stack **s);
 void	quicksort_int(int *arr, int l, int r);
 int		has_duplicates_stack(t_stack *a);
+int		is_sorted(t_stack *a);
+void	compress_indexes(t_stack *a);
 
 #endif

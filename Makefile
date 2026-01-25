@@ -10,7 +10,12 @@ LIBFT		:= $(LIBFT_DIR)/libft.a
 INCLUDES    := -Iincludes/ -I$(LIBFT_DIR)
 
 SRCS		:= \
-			   src/push_swap.c
+			   src/main.c \
+			   src/parsing/parse_args.c \
+			   src/parsing/parse_one_int.c \
+			   src/stack/stack_init.c \
+			   src/stack/stack_utils.c \
+			   src/algo/compress.c
 
 OBJS        := $(SRCS:.c=.o)
 

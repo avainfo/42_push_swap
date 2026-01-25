@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack_helper.c                                     :+:      :+:    :+:   */
+/*   stack_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ando-sou <ando-sou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: antigrav <antigrav@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/19 20:45:37 by ando-sou          #+#    #+#             */
-/*   Updated: 2025/12/19 21:57:30 by ando-sou         ###   ########.fr       */
+/*   Created: 2026/01/25 02:30:00 by antigrav          #+#    #+#             */
+/*   Updated: 2026/01/25 02:30:00 by antigrav         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "../../includes/push_swap.h"
 
 t_stack	*stack_new(int value)
 {
@@ -40,4 +40,29 @@ void	stack_add_back(t_stack **stack, t_stack *new)
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = new;
+}
+
+void	free_stack(t_stack **stack)
+{
+	t_stack	*tmp;
+	t_stack	*curr;
+
+	if (!stack || !*stack)
+		return ;
+	curr = *stack;
+	while (curr)
+	{
+		tmp = curr->next;
+		free(curr);
+		curr = tmp;
+	}
+	*stack = NULL;
+}
+
+void	error_exit(t_stack **stack)
+{
+	if (stack)
+		free_stack(stack);
+	write(2, "Error\n", 6);
+	exit(1);
 }
