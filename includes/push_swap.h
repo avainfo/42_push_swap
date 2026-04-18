@@ -56,5 +56,7 @@ void	simple_sort(t_stack **a, t_stack **b);
 void	push_swap(t_stack **a, t_stack **b);
 int		*find_lis_indices(t_stack *a, int size);
 void	move_cheapest_back(t_stack **a, t_stack **b);
+int		find_cheapest_b(t_stack *a, t_stack *b, int *method);
+int		get_target_pos(t_stack *a, int val);
 
 #endif

@@ -12,9 +12,6 @@
 
 #include "../../includes/push_swap.h"
 
-int	find_cheapest_b(t_stack *a, t_stack *b, int *method);
-int	get_target_pos(t_stack *a, int val);
-
 static void	do_rr_rrr(t_stack **a, t_stack **b, int *cnt, int reverse)
 {
 	while (cnt[0] > 0 && cnt[1] > 0)
