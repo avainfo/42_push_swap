@@ -6,7 +6,7 @@
 /*   By: ando-sou <ando-sou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/19 22:24:07 by ando-sou          #+#    #+#             */
-/*   Updated: 2026/01/25 03:05:00 by ando-sou         ###   ########.fr       */
+/*   Updated: 2026/04/18 18:03:05 by ando-sou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,13 @@ static void	process_arg_string(char *s, t_stack **a)
 	while (1)
 	{
 		ret = parse_one_int(s, &j, &val);
-		if (ret == 1)
+		if (ret == 1 && cnt == 0)
 		{
 			stack_add_back(a, stack_new(val));
 			cnt++;
 		}
+		else if (ret == 1)
+			error_exit(a);
 		else if (ret == 0)
 			break ;
 		else
